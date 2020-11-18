@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Google Calendar API Quickstart</title>
+    <title>Hack It</title>
     <meta charset="utf-8" />
   </head>
   <body>
@@ -118,16 +118,16 @@
         }
       }
 
-      /**
-       *  Sign in the user upon button click.
-       */
+      
+       // Sign in the user upon button click.
+    
       function handleAuthClick(event) {
         gapi.auth2.getAuthInstance().signIn();
       }
 
-      /**
-       *  Sign out the user upon button click.
-       */
+      
+     // Sign out the user upon button click.
+       
       function handleSignoutClick(event) {
         gapi.auth2.getAuthInstance().signOut();
       }
@@ -135,8 +135,6 @@
       /**
        * Append a pre element to the body containing the given message
        * as its text node. Used to display the results of the API call.
-       *
-       * @param {string} message Text to be placed in pre element.
        */
       function appendPre(message) {
         var pre = document.getElementById('content');
@@ -251,8 +249,27 @@
                         my_map[project].append(email)
                     }
                 }
-                for(var i = 0; i < my_map.length; i++){
+                for(var key in my_map.keys()){
+                    var title = key
+                    var my_request = {
+                        name: title,
+                        mimeType: 'application/vnd.google-apps.document'
+                    }
+                    
+                    gapi.client.drive.files.create({
+                        request: my_request
+                    })
 
+                    for(var person in my_map[key]){
+                        var my_permission = {
+                            role: "writer",
+                            type: "user"
+                        }
+                        gapi.client.drive.permissions.create({
+                            request: my_permission
+                        });
+                    }
+                    
                 }
                 
             }
